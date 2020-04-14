@@ -32,7 +32,27 @@
     </div>
   </nav>
   <div class="container">
-    <h1>Posts</h1>
+    <% @items.each do |item| %>
+      <div class="box h-25 d-inline-block" style="width: 24.5%;">
+        <img src="https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/blackhole.png?itok=THJrwcHP" alt="image" class="w-100 h-75">
+        
+      </div>
+
+
+      <tr>
+        <td><%= item.name %></td>
+        <td><%= item.desc %></td>
+        <td><%= item.stock %></td>
+        <td><%= item.price %></td>
+        <td><%= link_to "Show", item %></td>
+        <td><%= link_to "Edit", edit_item_path(item) %></td>
+        <td><%= link_to "Destroy", item, method: :delete, data: { confirm: "Are you sure?" } %></td>
+      </tr>
+    <% end %>
+
+
+
+
     <table>
       <thead>
         <tr>
