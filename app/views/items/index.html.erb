@@ -12,10 +12,10 @@
         <li class="nav-item">
           <%= link_to "NNN", root_path, class: "nav-link text-primary" %>
         </li>
-        <li class="nav-item">
-          <%= link_to "Profile", root_path, class: "nav-link text-primary" %>
-        </li>
         <% if customer_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Profile", edit_customer_registration_path, class: "nav-link text-primary" %>
+          </li>
           <li class="nav-item">
             <%= link_to "Logout", destroy_customer_session_path, method: :delete, class: "nav-link text-primary" %>
           </li>
