@@ -8,16 +8,40 @@ ActiveAdmin.register_page "Dashboard" do
     #     small I18n.t("active_admin.dashboard_welcome.call_to_action")
     #   end
     # end
+
     columns do
-      # column do
-      #   panel "Recent Orders" do
-      #     table_for Order.complete.order("id desc").limit(10) do
-      #       column("State") { |order| status_tag(order.state) }
-      #       column("Customer") { |order| link_to(order.user.email, admin_user_path(order.user)) }
-      #       column("Total")   { |order| number_to_currency order.total_price }
-      #     end
-      #   end
-      # end
+      column do
+          panel "Recent Orders" do
+            table_for Order.order("id desc").limit(10) do 
+              if Order.where("id > 2").present?
+                column("State") { |order| status_tag(order.status) }
+                column("Customer") { |order| link_to(order.customer.email, admin_customer_path(order.customer)) }
+                column("Total")   { |order| number_to_currency order.order_total }
+                column("Change status")   { |order| link_to("Edit status", edit_admin_order_url(order)) }
+            end
+          end
+        end
+      end
+
+      column do
+        panel "Recent Customers" do
+          table_for Customer.order("id desc").limit(10).each do |_customer|
+            column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
+          end
+        end
+      end
+    end # columns
+
+    columns do
+      column do
+        panel "Recent Orders" do
+          table_for Order.order("id desc").limit(10) do
+            column("State") { |order| status_tag(order.status) }
+            column("Customer") { |order| link_to(order.customer.email, admin_customer_path(order.customer)) }
+            column("Total")   { |order| number_to_currency order.order_total }
+          end
+        end
+      end
 
       column do
         panel "Recent Customers" do

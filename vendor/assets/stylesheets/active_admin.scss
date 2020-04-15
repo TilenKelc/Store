@@ -11,6 +11,29 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
+input[disabled="disabled"],
+input[disabled] {
+  background-color: #F4F4F4;
+  border: 0px solid #F4F4F4 !important;  
+  font-size: 110% !important;
+}
+
+#order_status {
+    font-size: 140% !important;
+    margin-bottom: 15px;
+}
+
+#status_order_para {
+    display: block;
+    width: 20%;
+    float: left;
+    font-size: 120%;
+    font-weight: bold;
+    color: #5E6469;
+    margin-left: 10px;
+    margin-bottom: 15px;
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
