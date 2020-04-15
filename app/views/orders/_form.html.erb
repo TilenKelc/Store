@@ -1,4 +1,43 @@
-<%= form_with(model: order, local: true) do |form| %>
+<div class="container extra">
+  <nav class="navbar navbar-expand-lg navbar-light custom-navbar" style="background-color: #e3f2fd;">
+    <%= link_to "Store", root_path, class: "navbar-brand text-primary" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <%= link_to "Home", root_path, class: "nav-link text-primary" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "NNN", root_path, class: "nav-link text-primary" %>
+        </li>
+        <% if customer_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Profile", edit_customer_registration_path, class: "nav-link text-primary" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Logout", destroy_customer_session_path, method: :delete, class: "nav-link text-primary" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_customer_session_path, class: "nav-link text-primary" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= form_tag(root_path, :method => "get", id: "search-form", class: "form-inline my-2 my-lg-0") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control mr-sm-2" %>
+        <%= submit_tag "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
+    </div>
+  </nav>
+
+  <div class="container">
+      <h3 class="text-center custom-tittle">Create order</h3>
+
+
+      <div class="container text-center">
+        <%= form_with(model: order, local: true) do |form| %>
   <% if order.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
@@ -10,10 +49,19 @@
       </ul>
     </div>
   <% end %>
+<div class="form-group row">
+    <%= form.label :order_num, class: "col-sm-2 col-form-label" %>
+    <div class="col-sm-10">
+      <%= form.number_field :order_num, class: "form-control" %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= form.label :order_num %>
-    <%= form.number_field :order_num %>
+
+  <div class="field form-group-row">
+    
+        <div class="col-sm-10">
+    <%= form.number_field :order_num, class: "form-control" %>
+    </div>
   </div>
 
   <div class="field">
@@ -29,6 +77,11 @@
   <div class="field">
     <%= form.label :surname %>
     <%= form.text_field :surname %>
+  </div>
+
+  <div class="field">
+    <%= form.label :status %>
+    <%= form.text_field :status %>
   </div>
 
   <div class="field">
@@ -60,3 +113,9 @@
     <%= form.submit %>
   </div>
 <% end %>
+      </div>
+
+      <%= link_to "Back", :back %>
+    </div>
+  <br>
+</div>
