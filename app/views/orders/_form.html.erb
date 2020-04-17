@@ -31,91 +31,157 @@
       <% end %>
     </div>
   </nav>
-
   <div class="container">
-      <h3 class="text-center custom-tittle">Create order</h3>
-
-
-      <div class="container text-center">
-        <%= form_with(model: order, local: true) do |form| %>
-  <% if order.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
-
-      <ul>
-        <% order.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
+    <h3 class="text-center custom-tittle">Create order</h3>
+    <div class="container text-center">
+      <%= form_with(model: order, local: true) do |form| %>
+        <% if order.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(order.errors.count, "error") %> prohibited this order from being saved:</h2>
+            <ul>
+              <% order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
         <% end %>
-      </ul>
+        <div class="row">
+          <div class="custom-table-orders">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Total</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-md-6">
+                    <div class="media">
+                      <a class="thumbnail pull-left" href="#"> <img class="media-object" src="https://www.mall.cz/i/44694497/1000/1000" style="width: 72px; height: 72px;"> </a>
+                      <div class="media-body">
+                        <h4 class="media-heading"><a href="#"> <%= @item.name %></a></h4>
+                        <span>Status: </span>
+                        <% if @item.stock > 0 %>
+                          <span class="text-success">
+                            <strong id="stock">In stock</strong>
+                          </span>
+                        <% else %>
+                          <span class="text-warning">
+                            <strong>Not in stock</strong>
+                          </span>
+                        <% end %>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="col-md-1" style="text-align: center">
+                    <%= form.number_field :quantity, class: "form-control", id: "quantity", value: "1", onclick: "Check()" %>
+                  </td>
+                  <td class="col-md-1 text-center price"><%= @item.price %>€</td>
+                  <script>
+                    function Check(){
+                      var quantity = document.getElementById("quantity");                    
+                      $('document').ready(function() {
+                        if(quantity.value >= 0){
+                          var div = $(".total");
+                          var div2 = $(".total-check");
+                          var div3 = $(".price");
+                        
+                          var text = div3.text();
+
+                          text = text.replace("€", "");
+                          text = quantity.value*text;
+                          text = text.toFixed(2);
+
+                          div.text(text + "€");
+                          div2.text(text + "€");
+                        }else{
+                          alert("Quantity cannot be less than 0");
+                          quantity.value = 0;
+                        }
+                      });                    
+                    }
+                  </script>
+                  <td class="col-md-1 text-center total"><%= @item.price %>€</td>
+                  <td class="col-md-1">
+                    <button type="button" class="btn btn-danger">
+                      <span class="glyphicon glyphicon-remove"></span> Remove
+                    </button></td>
+                </tr>
+                <tr>
+                  <td>   </td>
+                  <td>   </td>
+                  <td>   </td>
+                  <td>
+                    <h3>Total</h3>
+                  </td>
+                  <td class="text-right">
+                    <h3><strong class="total-check"><%= @item.price %>€</strong></h3>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :name, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :surname, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :surname, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :email, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :email, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :phone_num, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :phone_num, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :address, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :address, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :city, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :city, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :postal_num, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :postal_num, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label "Payment", class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.select :payment_option, ["On delivery", "Credit card", "Bank transfer"] %>
+          </div>
+        </div>
+        <%= form.hidden_field :item_id, value: @item.id, class: "hidden" %>
+        <div class="actions">
+          <%= form.submit "Buy now", class: "btn btn-success" %>
+        </div>
+      <% end %>
     </div>
-  <% end %>
-<div class="form-group row">
-    <%= form.label :order_num, class: "col-sm-2 col-form-label" %>
-    <div class="col-sm-10">
-      <%= form.number_field :order_num, class: "form-control" %>
-    </div>
+    <%= link_to "Back", :back %>
   </div>
-
-
-  <div class="field form-group-row">
-    
-        <div class="col-sm-10">
-    <%= form.number_field :order_num, class: "form-control" %>
-    </div>
-  </div>
-
-  <div class="field">
-    <%= form.label :order_total %>
-    <%= form.text_field :order_total %>
-  </div>
-
-  <div class="field">
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div class="field">
-    <%= form.label :surname %>
-    <%= form.text_field :surname %>
-  </div>
-
-  <div class="field">
-    <%= form.label :status %>
-    <%= form.text_field :status %>
-  </div>
-
-  <div class="field">
-    <%= form.label :email %>
-    <%= form.text_field :email %>
-  </div>
-
-  <div class="field">
-    <%= form.label :phone_num %>
-    <%= form.text_field :phone_num %>
-  </div>
-
-  <div class="field">
-    <%= form.label :address %>
-    <%= form.text_field :address %>
-  </div>
-
-  <div class="field">
-    <%= form.label :city %>
-    <%= form.text_field :city %>
-  </div>
-
-  <div class="field">
-    <%= form.label :postal_num %>
-    <%= form.text_field :postal_num %>
-  </div>
-
-  <div class="actions">
-    <%= form.submit %>
-  </div>
-<% end %>
-      </div>
-
-      <%= link_to "Back", :back %>
-    </div>
   <br>
 </div>

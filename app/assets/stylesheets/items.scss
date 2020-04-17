@@ -2,13 +2,14 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: https://sass-lang.com/
 
-body{
-    background-color: #bbe1fa !important;
-}
 .extra{
     height: 100vh;
     background-color: white;
     padding: 0 !important;
+}
+body{
+    height: auto;
+    background-color: #bbe1fa !important;
 }
 .btn-outline-success{
     color: #007bff !important;

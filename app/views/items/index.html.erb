@@ -31,7 +31,7 @@
       <% end %>
     </div>
   </nav>
-  <div class="container">
+  <div class="container custom-container">
     <div class="row">
       <% @items.each do |item| %>
         <div class="col-md-3 col-sm-6 custom-product">
@@ -47,7 +47,7 @@
               <div class="price text-primary">
                 <%= item.price %>€
               </div>
-              <%= link_to "Buy now", new_order_path, class: "add-to-cart" %>
+              <%= link_to "Buy now", "/orders/" + item.id.to_s + "/new", class: "add-to-cart" %>
             </div>
           </div>
         </div>
