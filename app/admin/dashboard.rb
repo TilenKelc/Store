@@ -8,16 +8,116 @@ ActiveAdmin.register_page "Dashboard" do
     #     small I18n.t("active_admin.dashboard_welcome.call_to_action")
     #   end
     # end
+
     columns do
+      column do
+          panel "Pending Orders" do
+            table_for Order.order("id desc").limit(10) do 
+                column("State") do |a|
+                  if a.status == "pending"
+                    status_tag(a.status)
+                  else
+                    # class: "order_colS"
+                  end
+                end
+                column("Customer") do |a|
+                  if a.status == "pending"
+                  link_to(a.customer.email, admin_customer_path(a.customer))
+                  end
+                end
+                column("Total") do |a|
+                  if a.status == "pending"
+                  number_to_currency a.order_total
+                  end
+                end
+                column("Change status") do |a|   
+                  if a.status == "pending"
+                  link_to("Edit status", edit_admin_order_url(a))
+                  end
+                end
+          end
+        end
+      end
+
+      column do
+        panel "Processing Orders" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.status == "processing"
+                  status_tag(a.status)
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Customer") do |a|
+                if a.status == "processing"
+                link_to(a.customer.email, admin_customer_path(a.customer))
+                end
+              end
+              column("Total") do |a|
+                if a.status == "processing"
+                number_to_currency a.order_total
+                end
+              end
+              column("Change status") do |a|   
+                if a.status == "processing"
+                link_to("Edit status", edit_admin_order_url(a))
+                end
+              end
+        end
+      end
+    end
+
+    column do
+      panel "Completed Orders" do
+        table_for Order.order("id desc").limit(10) do 
+            column("State") do |a|
+              if a.status == "completed"
+                status_tag(a.status)
+              else
+                # class: "order_colS"
+              end
+            end
+            column("Customer") do |a|
+              if a.status == "completed"
+              link_to(a.customer.email, admin_customer_path(a.customer))
+              end
+            end
+            column("Total") do |a|
+              if a.status == "completed"
+              number_to_currency a.order_total
+              end
+            end
+            column("Change status") do |a|   
+              if a.status == "completed"
+              link_to("Edit status", edit_admin_order_url(a))
+              end
+            end
+      end
+    end
+  end
+
+    
+
       # column do
-      #   panel "Recent Orders" do
-      #     table_for Order.complete.order("id desc").limit(10) do
-      #       column("State") { |order| status_tag(order.state) }
-      #       column("Customer") { |order| link_to(order.user.email, admin_user_path(order.user)) }
-      #       column("Total")   { |order| number_to_currency order.total_price }
+      #   panel "Recent Customers" do
+      #     table_for Customer.order("id desc").limit(10).each do |_customer|
+      #       column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
       #     end
       #   end
       # end
+    end # columns
+
+    columns do
+      column do
+        panel "Recent Orders" do
+          table_for Order.order("id desc").limit(10) do
+            column("State") { |order| status_tag(order.status) }
+            column("Customer") { |order| link_to(order.customer.email, admin_customer_path(order.customer)) }
+            column("Total")   { |order| number_to_currency order.order_total }
+          end
+        end
+      end
 
       column do
         panel "Recent Customers" do
