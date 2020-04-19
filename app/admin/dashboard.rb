@@ -11,25 +11,101 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-          panel "Recent Orders" do
+          panel "Pending Orders" do
             table_for Order.order("id desc").limit(10) do 
-              if Order.where("id > 2").present?
-                column("State") { |order| status_tag(order.status) }
-                column("Customer") { |order| link_to(order.customer.email, admin_customer_path(order.customer)) }
-                column("Total")   { |order| number_to_currency order.order_total }
-                column("Change status")   { |order| link_to("Edit status", edit_admin_order_url(order)) }
-            end
+                column("State") do |a|
+                  if a.status == "pending"
+                    status_tag(a.status)
+                  else
+                    # class: "order_colS"
+                  end
+                end
+                column("Customer") do |a|
+                  if a.status == "pending"
+                  link_to(a.customer.email, admin_customer_path(a.customer))
+                  end
+                end
+                column("Total") do |a|
+                  if a.status == "pending"
+                  number_to_currency a.order_total
+                  end
+                end
+                column("Change status") do |a|   
+                  if a.status == "pending"
+                  link_to("Edit status", edit_admin_order_url(a))
+                  end
+                end
           end
         end
       end
 
       column do
-        panel "Recent Customers" do
-          table_for Customer.order("id desc").limit(10).each do |_customer|
-            column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
-          end
+        panel "Processing Orders" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.status == "processing"
+                  status_tag(a.status)
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Customer") do |a|
+                if a.status == "processing"
+                link_to(a.customer.email, admin_customer_path(a.customer))
+                end
+              end
+              column("Total") do |a|
+                if a.status == "processing"
+                number_to_currency a.order_total
+                end
+              end
+              column("Change status") do |a|   
+                if a.status == "processing"
+                link_to("Edit status", edit_admin_order_url(a))
+                end
+              end
         end
       end
+    end
+
+    column do
+      panel "Completed Orders" do
+        table_for Order.order("id desc").limit(10) do 
+            column("State") do |a|
+              if a.status == "completed"
+                status_tag(a.status)
+              else
+                # class: "order_colS"
+              end
+            end
+            column("Customer") do |a|
+              if a.status == "completed"
+              link_to(a.customer.email, admin_customer_path(a.customer))
+              end
+            end
+            column("Total") do |a|
+              if a.status == "completed"
+              number_to_currency a.order_total
+              end
+            end
+            column("Change status") do |a|   
+              if a.status == "completed"
+              link_to("Edit status", edit_admin_order_url(a))
+              end
+            end
+      end
+    end
+  end
+
+    
+
+      # column do
+      #   panel "Recent Customers" do
+      #     table_for Customer.order("id desc").limit(10).each do |_customer|
+      #       column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
+      #     end
+      #   end
+      # end
     end # columns
 
     columns do

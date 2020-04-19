@@ -34,6 +34,11 @@ input[disabled] {
     margin-bottom: 15px;
 }
 
+td {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
 // Overriding any non-variable SASS must be done after the fact.
 // For example, to change the default status-tag color:
 //
