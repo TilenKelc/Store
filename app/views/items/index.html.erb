@@ -1,5 +1,5 @@
 <div class="container extra">
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
+  <nav class="navbar navbar-expand-lg navbar-light custom-navbar" style="background-color: #e3f2fd;">
     <%= link_to "Store", root_path, class: "navbar-brand text-primary" %>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -31,52 +31,28 @@
       <% end %>
     </div>
   </nav>
-  <div class="container">
-    <% @items.each do |item| %>
-      <div class="box h-25 d-inline-block" style="width: 24.5%;">
-        <img src="https://www.nasa.gov/sites/default/files/styles/full_width/public/thumbnails/image/blackhole.png?itok=THJrwcHP" alt="image" class="w-100 h-75">
-        
-      </div>
-
-
-      <tr>
-        <td><%= item.name %></td>
-        <td><%= item.desc %></td>
-        <td><%= item.stock %></td>
-        <td><%= item.price %></td>
-        <td><%= link_to "Show", item %></td>
-        <td><%= link_to "Edit", edit_item_path(item) %></td>
-        <td><%= link_to "Destroy", item, method: :delete, data: { confirm: "Are you sure?" } %></td>
-      </tr>
-    <% end %>
-
-
-
-
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Desc</th>
-          <th>Stock</th>
-          <th>Price</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @items.each do |item| %>
-          <tr>
-            <td><%= item.name %></td>
-            <td><%= item.desc %></td>
-            <td><%= item.stock %></td>
-            <td><%= item.price %></td>
-            <td><%= link_to "Show", item %></td>
-            <td><%= link_to "Edit", edit_item_path(item) %></td>
-            <td><%= link_to "Destroy", item, method: :delete, data: { confirm: "Are you sure?" } %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
+  <div class="container custom-container">
+    <div class="row">
+      <% @items.each do |item| %>
+        <div class="col-md-3 col-sm-6 custom-product">
+          <div class="product-grid4">
+            <div class="product-image4">
+              <a href="#">
+                <img class="pic-1" src="https://www.mall.cz/i/44694497/1000/1000">
+                <img class="pic-2" src="https://www.mall.cz/i/44694498/2000/2000">
+              </a>
+            </div>
+            <div class="product-content">
+              <h3 class="title"><%= link_to item.name, item %></h3>
+              <div class="price text-primary">
+                <%= item.price %>€
+              </div>
+              <%= link_to "Buy now", "/orders/" + item.id.to_s + "/new", class: "add-to-cart" %>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    </div>
     <%= link_to "New Item", new_item_path %>
   </div>
   <br>
