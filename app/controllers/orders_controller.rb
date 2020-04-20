@@ -30,7 +30,7 @@ class OrdersController < ApplicationController
     @item = Item.find_by_id(order_params[:item_id])
     @order.order_num = rand(10000..100000)
     @order.order_total = @order.quantity * @item.price
-    @order.status = "Processing"
+    @order.status = "pending"
     @order.customer = current_customer
     @order.item = @item
 
@@ -57,6 +57,10 @@ class OrdersController < ApplicationController
         format.json { render json: @order.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def card_payment
+    @orders = Order.all
   end
 
   # DELETE /orders/1
