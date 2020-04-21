@@ -11,10 +11,11 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order = Order.find_by_id(params[:id])
     respond_to do |format|
       format.html
       format.pdf do
-        render pdf: "File",
+        render pdf: "Order_" + @order.order_num.to_s,
                template: "orders/show.html.erb",
                layout: "pdf.html"
       end
@@ -39,7 +40,7 @@ class OrdersController < ApplicationController
     @item = Item.find_by_id(order_params[:item_id])
     @order.order_num = rand(10000..100000)
     @order.order_total = @order.quantity * @item.price
-    @order.status = "Pending"
+    @order.status = "pending"
     @order.customer = current_customer
     @order.item = @item
 
