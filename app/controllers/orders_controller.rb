@@ -34,10 +34,11 @@ class OrdersController < ApplicationController
     @order.status = "pending"
     @order.customer = current_customer
     @order.item = @item
+    @order.payment_option = "not paid"
 
     respond_to do |format|
       if @order.save
-        format.html { redirect_to @order, notice: "Order was successfully created." }
+        format.html { redirect_to '/orders/' + @order.id.to_s + '/edit' }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
@@ -51,7 +52,7 @@ class OrdersController < ApplicationController
   def update
     respond_to do |format|
       if @order.update(order_params)
-        format.html { redirect_to @order, notice: "Order was successfully updated." }
+        format.html { redirect_to root_path, notice: "Order completed." }
         format.json { render :show, status: :ok, location: @order }
       else
         format.html { render :edit }
@@ -60,8 +61,10 @@ class OrdersController < ApplicationController
     end
   end
 
-  def card_payment
-    @orders = Order.all
+  def payment_method
+    @order = Order.find_by_id(params[:id])
+    # @order.update(payment_method: params[:order][:payment_option])
+    # redirect_to root_path
   end
 
   # DELETE /orders/1
