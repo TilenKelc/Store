@@ -29,8 +29,7 @@ class CheckoutController < ApplicationController
 
     def success
         @order = Order.find(params[:id])
-        # Order.new(:order_num => 12345, :order_total => 30.0, :name => "Janez", :surname => "Novak", :email => "Janez@gmail.com", :phone_num => "0869949494", :address => "Pesje", :city => "Pesje", :postal_num => "3320", :customer_id => 1, :status => "pending", :item_id => 1, :payment_option => "Janez", :quantity => 1)
-        puts @order.id
+        @order.update(payment_option: "Credit card", status: "completed")
     end
 
     def cancel

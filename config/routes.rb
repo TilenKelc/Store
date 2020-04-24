@@ -6,7 +6,6 @@ Rails.application.routes.draw do
   devise_for :customers
   root to: "items#index"
   get "orders/:id/new/" => "orders#new", :as => :new_order
-  get 'order/:id/payment_method' => 'orders#payment_method', as: :payment_method
 
   scope '/checkout' do
     post 'create', to: 'checkout#create', as: 'checkout_create'

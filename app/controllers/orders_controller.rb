@@ -61,12 +61,6 @@ class OrdersController < ApplicationController
     end
   end
 
-  def payment_method
-    @order = Order.find_by_id(params[:id])
-    # @order.update(payment_method: params[:order][:payment_option])
-    # redirect_to root_path
-  end
-
   # DELETE /orders/1
   # DELETE /orders/1.json
   def destroy
