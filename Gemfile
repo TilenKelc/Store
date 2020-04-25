@@ -29,6 +29,8 @@ gem "jbuilder", "~> 2.7"
 gem "pg"
 gem "bootstrap", "~> 4.4.1"
 gem "devise"
+gem 'stripe'
+gem "figaro"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false

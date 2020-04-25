@@ -1,6 +1,94 @@
-<h1>Editing Order</h1>
+<div class="container extra">
+  <nav class="navbar navbar-expand-lg navbar-light custom-navbar" style="background-color: #e3f2fd;">
+    <%= link_to "Store", root_path, class: "navbar-brand text-primary" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <%= link_to "Home", root_path, class: "nav-link text-primary" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "NNN", root_path, class: "nav-link text-primary" %>
+        </li>
+        <% if customer_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Profile", edit_customer_registration_path, class: "nav-link text-primary" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Logout", destroy_customer_session_path, method: :delete, class: "nav-link text-primary" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_customer_session_path, class: "nav-link text-primary" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= form_tag(root_path, :method => "get", id: "search-form", class: "form-inline my-2 my-lg-0") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control mr-sm-2" %>
+        <%= submit_tag "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
+    </div>
+  </nav>
+  <div class="container">
+    <h3 class="text-center custom-tittle">Choose payment method</h3>
+    <br>
+    <div class="container text-center">
+      <%= form_with(model: @order, local: true) do |form| %>
+        <% if @order.errors.any? %>
+          <div id="error_explanation">
+            <h2><%= pluralize(@order.errors.count, "error") %> prohibited this order from being saved:</h2>
+            <ul>
+              <% @order.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+        <div class="row">
+          <div class="col-sm-12">
+            <%= form.select :payment_option, ["On delivery", "Credit card", "Bank transfer"] %>
+          </div>
+          <br><br>
+        </div>
+        <div class="actions">
+          <%= form.submit "Confirm", class: "btn btn-success", :id => 'submit' %>
+        </div>
+      <% end %>
+      <%= button_to 'Confirm', checkout_create_path, method: :post, params: {id: @order.id, item_id: @order.item_id}, :id => 'stripe', class: "btn btn-success", remote: true %>
+    </div>
+    <%= link_to "Back", :back %>
+  </div>
+  <br>
+</div>
+<script>
+$( document ).ready(function() {
+    $('#stripe').hide();
+});
 
-<%= render "form", order: @order %>
+$('#order_payment_option').change(function(){
 
-<%= link_to "Show", @order %> |
-<%= link_to "Back", orders_path %>
+    var value = $(this).val();
+    if(value == "Credit card") {
+      var name = $('#order_name').val();
+      var surname = $('#order_surname').val();
+      var email = $('#order_email').val();
+      var phone_num = $('#order_phone_num').val();
+      var address = $('#order_address').val();
+      var city = $('#order_city').val();
+      var postal_num = $('#order_postal_num').val();
+
+
+      $('#stripe').show();
+      $('#submit').hide();
+    }
+    else {
+      $('#stripe').hide();
+      $('#submit').show();
+    }
+
+
+});
+
+</script>

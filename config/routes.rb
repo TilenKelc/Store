@@ -6,4 +6,10 @@ Rails.application.routes.draw do
   devise_for :customers
   root to: "items#index"
   get "orders/:id/new/" => "orders#new", :as => :new_order
+
+  scope '/checkout' do
+    post 'create', to: 'checkout#create', as: 'checkout_create'
+    get ':id/success', to: 'checkout#success', as: 'checkout_success'
+    get 'cancel', to: 'checkout#cancel', as: 'checkout_cancel'
+  end
 end

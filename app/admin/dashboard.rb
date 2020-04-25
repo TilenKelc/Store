@@ -11,27 +11,27 @@ ActiveAdmin.register_page "Dashboard" do
 
     columns do
       column do
-          panel "Pending Orders" do
+          panel "PAYMENT ON DELIVERY - PENDING" do
             table_for Order.order("id desc").limit(10) do 
                 column("State") do |a|
-                  if a.status == "pending"
+                  if a.status == "pending" && a.payment_option == "On delivery"
                     status_tag(a.status)
                   else
                     # class: "order_colS"
                   end
                 end
                 column("Customer") do |a|
-                  if a.status == "pending"
+                  if a.status == "pending" && a.payment_option == "On delivery"
                   link_to(a.customer.email, admin_customer_path(a.customer))
                   end
                 end
                 column("Total") do |a|
-                  if a.status == "pending"
+                  if a.status == "pending" && a.payment_option == "On delivery"
                   number_to_currency a.order_total
                   end
                 end
                 column("Change status") do |a|   
-                  if a.status == "pending"
+                  if a.status == "pending" && a.payment_option == "On delivery"
                   link_to("Edit status", edit_admin_order_url(a))
                   end
                 end
@@ -40,27 +40,27 @@ ActiveAdmin.register_page "Dashboard" do
       end
 
       column do
-        panel "Processing Orders" do
+        panel "PAYMENT ON DELIVERY - PROCCESSING" do
           table_for Order.order("id desc").limit(10) do 
               column("State") do |a|
-                if a.status == "processing"
+                if a.status == "processing" && a.payment_option == "On delivery"
                   status_tag(a.status)
                 else
                   # class: "order_colS"
                 end
               end
               column("Customer") do |a|
-                if a.status == "processing"
+                if a.status == "processing" && a.payment_option == "On delivery"
                 link_to(a.customer.email, admin_customer_path(a.customer))
                 end
               end
               column("Total") do |a|
-                if a.status == "processing"
+                if a.status == "processing" && a.payment_option == "On delivery"
                 number_to_currency a.order_total
                 end
               end
               column("Change status") do |a|   
-                if a.status == "processing"
+                if a.status == "processing" && a.payment_option == "On delivery"
                 link_to("Edit status", edit_admin_order_url(a))
                 end
               end
@@ -69,35 +69,107 @@ ActiveAdmin.register_page "Dashboard" do
     end
 
     column do
-      panel "Completed Orders" do
+      panel "PAYMENT ON DELIVERY - COMPLETED" do
         table_for Order.order("id desc").limit(10) do 
             column("State") do |a|
-              if a.status == "completed"
+              if a.status == "completed" && a.payment_option == "On delivery"
                 status_tag(a.status)
               else
                 # class: "order_colS"
               end
             end
             column("Customer") do |a|
-              if a.status == "completed"
+              if a.status == "completed" && a.payment_option == "On delivery"
               link_to(a.customer.email, admin_customer_path(a.customer))
               end
             end
             column("Total") do |a|
-              if a.status == "completed"
+              if a.status == "completed" && a.payment_option == "On delivery"
               number_to_currency a.order_total
               end
             end
             column("Change status") do |a|   
-              if a.status == "completed"
+              if a.status == "completed" && a.payment_option == "On delivery"
               link_to("Edit status", edit_admin_order_url(a))
               end
             end
       end
     end
   end
+end # columns
 
-    
+    columns do
+      column do
+        panel "CARD PAYMENT - COMPLETED" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.status == "completed" && a.payment_option == "Credit card"
+                  status_tag(a.status)
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Customer") do |a|
+                if a.status == "completed" && a.payment_option == "Credit card"
+                link_to(a.customer.email, admin_customer_path(a.customer))
+                end
+              end
+              column("Total") do |a|
+                if a.status == "completed" && a.payment_option == "Credit card"
+                number_to_currency a.order_total
+                end
+              end
+        end
+      end
+      end
+
+      column do
+        panel "UNPAID ORDERS" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.payment_option == "not paid"
+                  status_tag("not paid")
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Customer") do |a|
+                if a.payment_option == "not paid"
+                link_to(a.customer.email, admin_customer_path(a.customer))
+                end
+              end
+              column("Total") do |a|
+                if a.payment_option == "not paid"
+                number_to_currency a.order_total
+                end
+              end
+            end
+        end
+      end
+
+      column do
+        panel "RECENT ORDERS" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.payment_option != "not paid"
+                  status_tag("not paid")
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Total") do |a|
+                if a.payment_option != "not paid"
+                  number_to_currency a.order_total
+                end
+              end
+              column("Payment method") do |a|
+                if a.payment_option != "not paid"
+                a.payment_option
+                end
+              end
+            end
+        end
+      end
 
       # column do
       #   panel "Recent Customers" do
@@ -106,26 +178,6 @@ ActiveAdmin.register_page "Dashboard" do
       #     end
       #   end
       # end
-    end # columns
-
-    columns do
-      column do
-        panel "Recent Orders" do
-          table_for Order.order("id desc").limit(10) do
-            column("State") { |order| status_tag(order.status) }
-            column("Customer") { |order| link_to(order.customer.email, admin_customer_path(order.customer)) }
-            column("Total")   { |order| number_to_currency order.order_total }
-          end
-        end
-      end
-
-      column do
-        panel "Recent Customers" do
-          table_for Customer.order("id desc").limit(10).each do |_customer|
-            column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
-          end
-        end
-      end
     end # columns
 
     # columns do
