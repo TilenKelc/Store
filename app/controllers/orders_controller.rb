@@ -46,10 +46,6 @@ class OrdersController < ApplicationController
     @order.item = @item
     @order.payment_option = "not paid"
 
-    if @item.quantity > 0
-      @item.quantity = @item.quantity - 1
-    end
-
     respond_to do |format|
       if @order.save
         format.html { redirect_to "/orders/" + @order.id.to_s + "/edit" }
