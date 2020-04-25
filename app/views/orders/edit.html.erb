@@ -32,8 +32,7 @@
     </div>
   </nav>
   <div class="container">
-    <h3 class="text-center custom-tittle">Choose payment method</h3>
-    <br>
+    <h3 class="text-center custom-tittle">Edit order</h3>
     <div class="container text-center">
       <%= form_with(model: @order, local: true) do |form| %>
         <% if @order.errors.any? %>
@@ -47,48 +46,128 @@
           </div>
         <% end %>
         <div class="row">
-          <div class="col-sm-12">
+          <div class="custom-table-orders">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th>Product</th>
+                  <th>Quantity</th>
+                  <th class="text-center">Price</th>
+                  <th class="text-center">Total</th>
+                  <th> </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="col-md-6">
+                    <div class="media">
+                      <a class="thumbnail pull-left" href="#"> <img class="media-object" src="https://www.mall.cz/i/44694497/1000/1000" style="width: 72px; height: 72px;"> </a>
+                      <div class="media-body">
+                        <h4 class="media-heading"><a href="#"> <%= @order.item.name %></a></h4>
+                        <span>Status: </span>
+                        <% if @order.item.stock > 0 %>
+                          <span class="text-success">
+                            <strong id="stock">In stock</strong>
+                          </span>
+                        <% else %>
+                          <span class="text-warning">
+                            <strong>Not in stock</strong>
+                          </span>
+                        <% end %>
+                      </div>
+                    </div>
+                  </td>
+                  <td class="col-md-1" style="text-align: center">
+                    <%= form.number_field :quantity, class: "form-control", id: "quantity", value: @order.quantity, onclick: "Check()", disabled: true %>
+                  </td>
+                  <td class="col-md-1 text-center price"><%= @order.item.price %>€</td>
+                  <script>
+                    function Check(){
+                      var quantity = document.getElementById("quantity");                    
+                      $('document').ready(function() {
+                        if(quantity.value >= 0){
+                          var div = $(".total");
+                          var div2 = $(".total-check");
+                          var div3 = $(".price");
+                        
+                          var text = div3.text();
+
+                          text = text.replace("€", "");
+                          text = quantity.value*text;
+                          text = text.toFixed(2);
+
+                          div.text(text + "€");
+                          div2.text(text + "€");
+                        }else{
+                          alert("Quantity cannot be less than 0");
+                          quantity.value = 0;
+                        }
+                      });                    
+                    }
+                  </script>
+                  <td class="col-md-1 text-center total"><%= @order.order_total %>€</td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <hr>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :name, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :name, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :surname, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :surname, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :email, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :email, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :phone_num, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :phone_num, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :address, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :address, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :city, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :city, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label :postal_num, class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
+            <%= form.text_field :postal_num, class: "form-control" %>
+          </div>
+        </div>
+        <div class="form-group row w-75 custom-order-input">
+          <%= form.label "Payment", class: "col-sm-2 col-form-label" %>
+          <div class="col-sm-10">
             <%= form.select :payment_option, ["On delivery", "Credit card", "Bank transfer"] %>
           </div>
-          <br><br>
         </div>
+        <%= form.hidden_field :item_id, value: @order.item.id, class: "hidden" %>
         <div class="actions">
-          <%= form.submit "Confirm", class: "btn btn-success", :id => 'submit' %>
+          <%= form.submit "Buy now", class: "btn btn-success" %>
         </div>
       <% end %>
-      <%= button_to 'Confirm', checkout_create_path, method: :post, params: {id: @order.id, item_id: @order.item_id}, :id => 'stripe', class: "btn btn-success", remote: true %>
     </div>
     <%= link_to "Back", :back %>
   </div>
   <br>
 </div>
-<script>
-$( document ).ready(function() {
-    $('#stripe').hide();
-});
-
-$('#order_payment_option').change(function(){
-
-    var value = $(this).val();
-    if(value == "Credit card") {
-      var name = $('#order_name').val();
-      var surname = $('#order_surname').val();
-      var email = $('#order_email').val();
-      var phone_num = $('#order_phone_num').val();
-      var address = $('#order_address').val();
-      var city = $('#order_city').val();
-      var postal_num = $('#order_postal_num').val();
-
-
-      $('#stripe').show();
-      $('#submit').hide();
-    }
-    else {
-      $('#stripe').hide();
-      $('#submit').show();
-    }
-
-
-});
-
-</script>

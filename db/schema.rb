@@ -67,7 +67,6 @@ ActiveRecord::Schema.define(version: 2020_04_17_084108) do
     t.decimal "order_total"
     t.string "name"
     t.string "surname"
-    t.string "email"
     t.string "phone_num"
     t.string "address"
     t.string "city"
@@ -76,16 +75,16 @@ ActiveRecord::Schema.define(version: 2020_04_17_084108) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "customer_id"
     t.string "status"
-    t.bigint "items_id"
+    t.string "payment_option"
+    t.integer "quantity"
+    t.string "email"
     t.bigint "item_id"
     t.string "payment_option"
     t.integer "quantity"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
     t.index ["item_id"], name: "index_orders_on_item_id"
-    t.index ["items_id"], name: "index_orders_on_items_id"
   end
 
   add_foreign_key "orders", "customers"
   add_foreign_key "orders", "items"
-  add_foreign_key "orders", "items", column: "items_id"
 end

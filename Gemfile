@@ -29,8 +29,10 @@ gem "jbuilder", "~> 2.7"
 gem "pg"
 gem "bootstrap", "~> 4.4.1"
 gem "devise"
-gem 'stripe'
+gem "stripe"
 gem "figaro"
+gem "wicked_pdf"
+gem "wkhtmltopdf-binary"
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
@@ -57,5 +59,4 @@ end
 gem "tzinfo-data", platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
 # Active admin
-gem 'activeadmin'
-
+gem "activeadmin"

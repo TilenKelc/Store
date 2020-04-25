@@ -45,5 +45,7 @@
   <%= @order.postal_num %>
 </p>
 
-<%= link_to 'Edit', edit_order_path(@order) %> |
-<%= link_to 'Back', orders_path %>
+<%= link_to "Edit", edit_order_path(@order) %> |
+<%= link_to "Back", orders_path %>
+<%= link_to "Create PDF document", order_path(@order, format: :pdf) %>
+

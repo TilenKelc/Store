@@ -10,3 +10,30 @@
     margin-right: auto !important;
     width: 90%;
 }
+
+.pdf {
+    background-color: white !important;
+}
+.invoice-title h2, .invoice-title h3 {
+    display: inline-block !important;
+}
+
+.table > tbody > tr > .no-line {
+    border-top: none !important;
+}
+
+.table > thead > tr > .no-line {
+    border-bottom: none !important;
+}
+
+.table > tbody > tr > .thick-line {
+    border-top: 2px solid !important;
+}
+.custom-pdf{
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 20px;
+}
+.custom-row{
+    margin-top: 30px !important;
+}

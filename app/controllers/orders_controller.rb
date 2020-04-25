@@ -11,6 +11,15 @@ class OrdersController < ApplicationController
   # GET /orders/1
   # GET /orders/1.json
   def show
+    @order = Order.find_by_id(params[:id])
+    respond_to do |format|
+      format.html
+      format.pdf do
+        render pdf: "Order_" + @order.order_num.to_s,
+               template: "orders/show.html.erb",
+               layout: "pdf.html"
+      end
+    end
   end
 
   # GET /orders/new
@@ -22,6 +31,7 @@ class OrdersController < ApplicationController
   # GET /orders/1/edit
   def edit
     @item = Item.find_by_id(params[:id])
+    @order = Order.find_by_id(params[:id])
   end
 
   # POST /orders
@@ -36,9 +46,13 @@ class OrdersController < ApplicationController
     @order.item = @item
     @order.payment_option = "not paid"
 
+    if @item.quantity > 0
+      @item.quantity = @item.quantity - 1
+    end
+
     respond_to do |format|
       if @order.save
-        format.html { redirect_to '/orders/' + @order.id.to_s + '/edit' }
+        format.html { redirect_to "/orders/" + @order.id.to_s + "/edit" }
         format.json { render :show, status: :created, location: @order }
       else
         format.html { render :new }
