@@ -5,100 +5,99 @@
         <%= wicked_pdf_stylesheet_link_tag "application" -%>
     </head>
     <body class="pdf">
-<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-    		<div class="invoice-title">
-    			<h2>Invoice Order</h2>
-                <h3 class="float-right">#<%= @order.order_num %></h3>
-    		</div>
-    		<hr>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    				<strong>Billed To:</strong><br>
-    					John Smith<br>
-    					1234 Main<br>
-    					Apt. 4B<br>
-    					Springfield, ST 54321
-    				</address>
-    			</div>
-    			<div class="col-xs-6 text-right">
-    				<address>
-        			<strong>Shipped To:</strong><br>
-    					Jane Smith<br>
-    					1234 Main<br>
-    					Apt. 4B<br>
-    					Springfield, ST 54321
-    				</address>
-    			</div>
-    		</div>
-    		<div class="row">
-    			<div class="col-xs-6">
-    				<address>
-    					<strong>Payment Method:</strong><br>
-    					Visa ending **** 4242<br>
-    					jsmith@email.com
-    				</address>
-    			</div>
-    			<div class="col-xs-6 text-right">
-    				<address>
-    					<strong>Order Date:</strong><br>
-    					March 7, 2014<%= @order.created_at %>
-                        <br><br>
-    				</address>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-    
-    <div class="row">
-    	<div class="col-md-12">
-    		<div class="panel panel-default">
-    			<div class="panel-heading">
-    				<h3 class="panel-title"><strong>Order summary</strong></h3>
-    			</div>
-    			<div class="panel-body">
-    				<div class="table-responsive">
-    					<table class="table table-condensed">
-    						<thead>
-                                <tr>
-        							<td><strong>Item</strong></td>
-        							<td class="text-center"><strong>Price</strong></td>
-        							<td class="text-center"><strong>Quantity</strong></td>
-        							<td class="text-right"><strong>Totals</strong></td>
-                                </tr>
-    						</thead>
-    						<tbody>
-    							<tr>
-    								<td>
-                                        <%= @order.item.name %>
-                                    </td>
-    								<td class="text-center">
-                                        <%= @order.item.price %>&euro;
-                                    </td>
-    								<td class="text-center">
-                                        <%= @order.quantity %>
-                                    </td>
-    								<td class="text-right">
-                                        <%= @order.order_total %>&euro;
-                                    </td>
-    							</tr>
-    							<tr>
-    								<td class="thick-line"></td>
-    								<td class="thick-line"></td>
-    								<td class="thick-line text-center"><strong>Total</strong></td>
-    								<td class="thick-line text-right">
-                                        <%= @order.order_total %>&euro;
-                                    </td>
-    							</tr>
-    						</tbody>
-    					</table>
-    				</div>
-    			</div>
-    		</div>
-    	</div>
-    </div>
-</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="invoice-title">
+						<h2>Invoice Order</h2>
+						<h3 class="float-right">#<%= @order.order_num %></h3>
+					</div>
+					<hr>
+					<div class="row">
+						<div class="col-xs-6 custom-pdf float-left w-50">
+							<address>
+							<strong>Billed To:</strong><br>
+								<%= @order.name %> <%= @order.surname %><br>
+								<%= @order.address %><br>
+								<%= @order.city %>, <%= @order.postal_num %><br>
+								<%= @order.phone_num %>
+							</address>
+						</div>
+						<div class="col-xs-6 text-right custom-pdf float-left w-50">
+							<address>
+							<strong>Shipped To:</strong><br>
+								<%= @order.name %> <%= @order.surname %><br>
+								<%= @order.address %><br>
+								<%= @order.city %>, <%= @order.postal_num %><br>
+								<%= @order.phone_num %>
+							</address>
+						</div>
+					</div>
+					<div class="row custom-row">
+						<div class="col-xs-6 custom-pdf float-left w-50">
+							<address>
+								<strong>Payment Method:</strong><br>
+								<%= @order.payment_option %><br>
+								<%= @order.email %>
+							</address>
+						</div>
+						<div class="col-xs-6 text-right custom-pdf float-left w-50">
+							<address>
+								<strong>Order Date:</strong><br>
+								<%= @order.created_at.to_date %>, <%= @order.created_at.strftime("%H:%M") %>
+								<br><br>
+							</address>
+						</div>
+					</div>
+				</div>
+			</div><br>
+			<div class="row float-left w-100 custom-row">
+				<div class="col-md-12">
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title"><strong>Order summary</strong></h3>
+						</div>
+						<div class="panel-body">
+							<div class="table-responsive">
+								<table class="table table-condensed">
+									<thead>
+										<tr>
+											<td><strong>Item</strong></td>
+											<td class="text-center"><strong>Price</strong></td>
+											<td class="text-center"><strong>Quantity</strong></td>
+											<td class="text-right"><strong>Totals</strong></td>
+										</tr>
+									</thead>
+									<tbody>
+										<tr>
+											<td>
+												<%= @order.item.name %>
+											</td>
+											<td class="text-center">
+												<%= @order.item.price %>&euro;
+											</td>
+											<td class="text-center">
+												<%= @order.quantity %>
+											</td>
+											<td class="text-right">
+												<%= @order.order_total %>&euro;
+											</td>
+										</tr>
+										<tr>
+											<td class="thick-line"></td>
+											<td class="thick-line"></td>
+											<td class="thick-line text-center"><strong>Total</strong></td>
+											<td class="thick-line text-right">
+												<%= @order.order_total %>&euro;
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
     </body>
 </html>
