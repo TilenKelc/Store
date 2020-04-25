@@ -29,7 +29,11 @@ class CheckoutController < ApplicationController
 
     def success
         @order = Order.find(params[:id])
-        @order.update(payment_option: "Credit card", status: "completed")
+        if @order.update(payment_option: "Credit card", status: "completed")
+            redirect_to root_path, notice: "Order completed."
+        else
+            puts "There was a error"
+        end
     end
 
     def cancel
