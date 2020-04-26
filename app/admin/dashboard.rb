@@ -152,7 +152,7 @@ end # columns
           table_for Order.order("id desc").limit(10) do 
               column("State") do |a|
                 if a.payment_option != "not paid"
-                  status_tag("not paid")
+                  status_tag(a.status)
                 else
                   # class: "order_colS"
                 end
