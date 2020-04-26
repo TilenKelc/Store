@@ -1,41 +1,75 @@
-<p id="notice"><%= notice %></p>
-
-<h1>Orders</h1>
-
-<table>
-  <thead>
-    <tr>
-      <th>Order num</th>
-      <th>Order total</th>
-      <th>Name</th>
-      <th>Surname</th>
-      <th>Email</th>
-      <th>Phone num</th>
-      <th>Address</th>
-      <th>City</th>
-      <th>Postal num</th>
-      <th colspan="3"></th>
+<div class="container extra">
+  <nav class="navbar navbar-expand-lg navbar-light custom-navbar" style="background-color: #e3f2fd;">
+    <%= link_to "Store", root_path, class: "navbar-brand text-primary" %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <%= link_to "Home", root_path, class: "nav-link text-primary" %>
+        </li>
+        <% if customer_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Orders", orders_path, class: "nav-link text-primary" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Profile", edit_customer_registration_path, class: "nav-link text-primary" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to "Logout", destroy_customer_session_path, method: :delete, class: "nav-link text-primary" %>
+          </li>
+        <% else %>
+          <li class="nav-item">
+            <%= link_to "Login", new_customer_session_path, class: "nav-link text-primary" %>
+          </li>
+        <% end %>
+      </ul>
+      <%= form_tag(root_path, :method => "get", id: "search-form", class: "form-inline my-2 my-lg-0") do %>
+        <%= text_field_tag :search, params[:search], placeholder: "Search", class: "form-control mr-sm-2" %>
+        <%= submit_tag "Search", class: "btn btn-outline-success my-2 my-sm-0" %>
+      <% end %>
+    </div>
+  </nav>
+  <div class="container custom-container">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Order number</th>
+          <th scope="col">Status</th>
+          <th scope="col">Payment method</th>
+          <th scope="col">Date/Time</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <th scope="row"><%= order.order_num %></th>
+            <td><% @var = order.status.slice(0, 1).capitalize + order.status.slice(1..-1) %><%= @var %> </td>
+            <td><%= order.payment_option %></td>
+            <td><%= order.created_at.to_date %>/<%= order.created_at.strftime("%H:%M") %></td>
+            <td><%= link_to "Show", order %></td>
+            <td><%= link_to "Edit", edit_order_path(order) %></td>
+            <td><%= link_to "PDF document", order_path(order, format: :pdf) %></td>
+          </tr>
+        <% end %>
+        <!--<tr>
+      <th scope="row">2</th>
+      <td>Jacob</td>
+      <td>Thornton</td>
+      <td>@fat</td>
     </tr>
-  </thead>
-
-  <tbody>
-    <% @orders.each do |order| %>
-      <tr>
-        <td><%= order.order_num %></td>
-        <td><%= order.order_total %></td>
-        <td><%= order.name %></td>
-        <td><%= order.surname %></td>
-        <td><%= order.email %></td>
-        <td><%= order.phone_num %></td>
-        <td><%= order.address %></td>
-        <td><%= order.city %></td>
-        <td><%= order.postal_num %></td>
-        <td><%= link_to "Show", order %></td>
-        <td><%= link_to "Edit", edit_order_path(order) %></td>
-        <td><%= link_to "Destroy", order, method: :delete, data: { confirm: "Are you sure?" } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<br>
+    <tr>
+      <th scope="row">3</th>
+      <td>Larry</td>
+      <td>the Bird</td>
+      <td>@twitter</td>
+    </tr>-->
+      </tbody>
+    </table>
+  </div>
+  <br>
+</div>
