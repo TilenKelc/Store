@@ -41,7 +41,6 @@
           <th scope="col">Date/Time</th>
           <th scope="col"></th>
           <th scope="col"></th>
-          <th scope="col"></th>
         </tr>
       </thead>
       <tbody>
@@ -51,7 +50,6 @@
             <td><% @var = order.status.slice(0, 1).capitalize + order.status.slice(1..-1) %><%= @var %> </td>
             <td><%= order.payment_option %></td>
             <td><%= order.created_at.to_date %>/<%= order.created_at.strftime("%H:%M") %></td>
-            <td><%= link_to "Show", order %></td>
             <td><%= link_to "Edit", edit_order_path(order) %></td>
             <td><%= link_to "PDF document", order_path(order, format: :pdf) %></td>
           </tr>
