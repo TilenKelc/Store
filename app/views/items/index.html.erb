@@ -9,10 +9,10 @@
         <li class="nav-item active">
           <%= link_to "Home", root_path, class: "nav-link text-primary" %>
         </li>
-        <li class="nav-item">
-          <%= link_to "NNN", root_path, class: "nav-link text-primary" %>
-        </li>
         <% if customer_signed_in? %>
+          <li class="nav-item">
+            <%= link_to "Orders", orders_path, class: "nav-link text-primary" %>
+          </li>
           <li class="nav-item">
             <%= link_to "Profile", edit_customer_registration_path, class: "nav-link text-primary" %>
           </li>
