@@ -34,6 +34,9 @@ gem "figaro"
 gem "wicked_pdf"
 gem "wkhtmltopdf-binary"
 gem "roo", "~> 2.8.0"
+gem 'rubyzip', '>= 1.2.1'
+gem 'axlsx', git: 'https://github.com/randym/axlsx.git', ref: 'c8ac844'
+gem 'axlsx_rails'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false

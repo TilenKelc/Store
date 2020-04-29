@@ -1,8 +1,11 @@
 Rails.application.routes.draw do
+  get 'items_imports/new'
+  get 'items_imports/create'
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   resources :orders, only: [:index, :show, :edit, :create, :update]
   resources :items
+  resources :items_imports, only: [:new, :create]
   devise_for :customers
   root to: "items#index"
   get "orders/:id/new/" => "orders#new", :as => :new_order
