@@ -1,0 +1,18 @@
+<% @count_pending = 0 %>
+<% @count_proccess = 0 %>
+<% @orders.each do |order| %>
+  <% if order.status = "pending" %>
+    <% @count_pending = @count_pending + 1 %>
+  <% elsif order.status = "processing" %>
+    <% @count_proccess = @count_proccess + 1 %>
+  <% end %>
+<% end %>
+
+<h2 style="color: black;">Order reviews</h2>
+
+<p style="color: black;">
+  There is currently <%= @count_pending %> orders pending.
+</p>
+<p style="color: black;">
+  There is currently <%= @count_proccess %> orders processing.
+</p>
