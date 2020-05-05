@@ -17,7 +17,8 @@ class CheckoutController < ApplicationController
         currency: "eur",
         quantity: @order.quantity,
       }],
-      success_url: "https://store-school-project.herokuapp.com/checkout/" + @order.id.to_s + "/success",
+    #   success_url: "https://store-school-project.herokuapp.com/checkout/" + @order.id.to_s + "/success",
+      success_url: "http://localhost:3000/checkout/" + @order.id.to_s + "/success",
       cancel_url: root_url,
     )
 
@@ -28,7 +29,7 @@ class CheckoutController < ApplicationController
 
   def success
     @order = Order.find(params[:id])
-    if @order.update(payment_option: "Credit card", status: "processing")
+    if @order.update(payment_option: "Credit card", status: "pending")
       redirect_to root_path, notice: "Payment completed."
     else
       puts "There was a error"

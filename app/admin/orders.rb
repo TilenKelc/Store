@@ -4,7 +4,7 @@ ActiveAdmin.register Order do
     inputs 'Order details' do
       # input :status, as: :select, collection: options_for_select(['pending', 'processing', 'completed'], object.status), label: "STATUS", required: true
       para "STATUS OF ORDER: ", id: "status_order_para"
-      select :status, options_for_select(['pending', 'processing', 'completed'], object.status)
+      select :status, options_for_select(['pending', 'completed'], object.status)
       input :order_num, input_html: { disabled: true }, label: "ORDER NUM" 
       input :order_total, input_html: { disabled: true }, label: "ORDER TOTAL" 
       input :name, input_html: { disabled: true }, label: "NAME" 

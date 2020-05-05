@@ -9,6 +9,7 @@ ActiveAdmin.register_page "Dashboard" do
     #   end
     # end
 
+
     columns do
       column do
           panel "PAYMENT ON DELIVERY - PENDING" do
@@ -30,6 +31,11 @@ ActiveAdmin.register_page "Dashboard" do
                   number_to_currency a.order_total
                   end
                 end
+                # column("Change status") do |a|   
+                #   if a.status == "pending" && a.payment_option == "On delivery"
+                #     select options_for_select(['pending', 'processing', 'completed'], a.status)
+                #   end
+                # end
                 column("Change status") do |a|   
                   if a.status == "pending" && a.payment_option == "On delivery"
                   link_to("Edit status", edit_admin_order_url(a))
@@ -39,34 +45,34 @@ ActiveAdmin.register_page "Dashboard" do
         end
       end
 
-      column do
-        panel "PAYMENT ON DELIVERY - PROCCESSING" do
-          table_for Order.order("id desc").limit(10) do 
-              column("State") do |a|
-                if a.status == "processing" && a.payment_option == "On delivery"
-                  status_tag(a.status)
-                else
-                  # class: "order_colS"
-                end
-              end
-              column("Customer") do |a|
-                if a.status == "processing" && a.payment_option == "On delivery"
-                link_to(a.customer.email, admin_customer_path(a.customer))
-                end
-              end
-              column("Total") do |a|
-                if a.status == "processing" && a.payment_option == "On delivery"
-                number_to_currency a.order_total
-                end
-              end
-              column("Change status") do |a|   
-                if a.status == "processing" && a.payment_option == "On delivery"
-                link_to("Edit status", edit_admin_order_url(a))
-                end
-              end
-        end
-      end
-    end
+    #   column do
+    #     panel "PAYMENT ON DELIVERY - PROCCESSING" do
+    #       table_for Order.order("id desc").limit(10) do 
+    #           column("State") do |a|
+    #             if a.status == "processing" && a.payment_option == "On delivery"
+    #               status_tag(a.status)
+    #             else
+    #               # class: "order_colS"
+    #             end
+    #           end
+    #           column("Customer") do |a|
+    #             if a.status == "processing" && a.payment_option == "On delivery"
+    #             link_to(a.customer.email, admin_customer_path(a.customer))
+    #             end
+    #           end
+    #           column("Total") do |a|
+    #             if a.status == "processing" && a.payment_option == "On delivery"
+    #             number_to_currency a.order_total
+    #             end
+    #           end
+    #           column("Change status") do |a|   
+    #             if a.status == "processing" && a.payment_option == "On delivery"
+    #             link_to("Edit status", edit_admin_order_url(a))
+    #             end
+    #           end
+    #     end
+    #   end
+    # end
 
     column do
       panel "PAYMENT ON DELIVERY - COMPLETED" do
@@ -100,6 +106,35 @@ end # columns
 
     columns do
       column do
+        panel "CARD PAYMENT - PENDING" do
+          table_for Order.order("id desc").limit(10) do 
+              column("State") do |a|
+                if a.status == "pending" && a.payment_option == "Credit card"
+                  status_tag(a.status)
+                else
+                  # class: "order_colS"
+                end
+              end
+              column("Customer") do |a|
+                if a.status == "pending" && a.payment_option == "Credit card"
+                link_to(a.customer.email, admin_customer_path(a.customer))
+                end
+              end
+              column("Total") do |a|
+                if a.status == "pending" && a.payment_option == "Credit card"
+                number_to_currency a.order_total
+                end
+              end
+              column("Change status") do |a|   
+                if a.status == "pending" && a.payment_option == "Credit card"
+                link_to("Edit status", edit_admin_order_url(a))
+                end
+              end
+        end
+      end
+      end
+
+      column do
         panel "CARD PAYMENT - COMPLETED" do
           table_for Order.order("id desc").limit(10) do 
               column("State") do |a|
@@ -119,8 +154,39 @@ end # columns
                 number_to_currency a.order_total
                 end
               end
+              column("Change status") do |a|   
+                if a.status == "completed" && a.payment_option == "Credit card"
+                link_to("Edit status", edit_admin_order_url(a))
+                end
+              end
         end
       end
+      end
+
+      # column do
+      #   panel "Recent Customers" do
+      #     table_for Customer.order("id desc").limit(10).each do |_customer|
+      #       column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
+      #     end
+      #   end
+      # end
+    end # columns
+
+    columns do
+      column do
+        panel "UPLOAD NEW ITEMS" do
+
+            para link_to 'Upload items manually',
+            new_admin_item_path
+
+            para link_to 'Download as Excel',
+            items_path(format: :xlsx)
+
+            para link_to 'Upload from Excel',
+            new_items_import_path;
+        
+
+        end
       end
 
       column do
@@ -170,52 +236,9 @@ end # columns
             end
         end
       end
+    end
 
-      # column do
-      #   panel "Recent Customers" do
-      #     table_for Customer.order("id desc").limit(10).each do |_customer|
-      #       column(:email)    { |customer| link_to(customer.email, admin_customer_path(customer)) }
-      #     end
-      #   end
-      # end
-    end # columns
+    
 
-    # columns do
-    #   column do
-    #     div do
-    #       br
-    #       text_node %{<iframe src="https://rpm.newrelic.com/public/charts/6VooNO2hKWB"
-    #                           width="500" height="300" scrolling="no" frameborder="no">
-    #                   </iframe>}.html_safe
-    #     end
-    #   end
-
-      # column do
-      #   panel "ActiveAdmin Demo" do
-      #     div do
-      #       render("/admin/sidebar_links", model: "dashboard")
-      #     end
-      #   end
-      # end
-
-    # Here is an example of a simple dashboard with columns and panels.
-    #
-    # columns do
-    #   column do
-    #     panel "Recent Posts" do
-    #       ul do
-    #         Post.recent(5).map do |post|
-    #           li link_to(post.title, admin_post_path(post))
-    #         end
-    #       end
-    #     end
-    #   end
-
-    #   column do
-    #     panel "Info" do
-    #       para "Welcome to ActiveAdmin."
-    #     end
-    #   end
-    # end
   end # content
 end
