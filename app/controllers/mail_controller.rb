@@ -1,5 +1,5 @@
 class MailController < ApplicationController
   def send_mail
-    UserMailer.notification.deliver
+    UserMailer.order_update(1).deliver
   end
 end
