@@ -1,4 +1,6 @@
 class UserMailer < ApplicationMailer
+  before_action :set_order, only: [:order_update]
+
   default from: "support@store.com"
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -11,7 +13,13 @@ class UserMailer < ApplicationMailer
   end
 
   def order_update
-    @order = Order.find_by_id(params[:id])
     mail to: @order.email, subject: "Order update"
+  end
+
+  private
+
+  # Use callbacks to share common setup or constraints between actions.
+  def set_order
+    @order = Order.find(params[:id])
   end
 end

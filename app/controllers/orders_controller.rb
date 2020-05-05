@@ -32,7 +32,6 @@ class OrdersController < ApplicationController
   def edit
     @item = Item.find_by_id(params[:id])
     @order = Order.find_by_id(params[:id])
-    @order = Order.find_by_id(params[:id])
     respond_to do |format|
       format.html
       format.pdf do
