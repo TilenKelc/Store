@@ -9,4 +9,9 @@ class UserMailer < ApplicationMailer
     @orders = Order.all
     mail to: "tilen.kelc@gmail.com", subject: "Order reminder"
   end
+
+  def order_update
+    @order = Order.find_by_id(params[:id])
+    mail to: @order.email, subject: "Order update"
+  end
 end
