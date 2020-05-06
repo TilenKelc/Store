@@ -38,11 +38,11 @@ Rails.application.configure do
 
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :port => 587,
-    :address => "smtp.mailgun.org",
-    :user_name => "postmaster@sandboxfc88a56e4fa944f4b59a395c4833f19a.mailgun.org",
-    :password => "7580b0993a0171037794aa9342268e83-65b08458-5bc0f041",
-    :domain => "sandboxfc88a56e4fa944f4b59a395c4833f19a.mailgun.org",
+    :port => ENV["MAILGUN_SMTP_PORT"],
+    :address => ENV["MAILGUN_SMTP_SERVER"],
+    :user_name => ENV["MAILGUN_SMTP_LOGIN"],
+    :password => ENV["MAILGUN_SMTP_PASSWORD"],
+    :domain => ENV["MAILGUN_DOMAIN"],
     :authentication => :plain,
   }
 

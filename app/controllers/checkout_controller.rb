@@ -17,8 +17,8 @@ class CheckoutController < ApplicationController
         currency: "eur",
         quantity: @order.quantity,
       }],
-    #   success_url: "https://store-school-project.herokuapp.com/checkout/" + @order.id.to_s + "/success",
-      success_url: "http://localhost:3000/checkout/" + @order.id.to_s + "/success",
+       success_url: "https://store-school-project.herokuapp.com/checkout/" + @order.id.to_s + "/success",
+      #success_url: "http://localhost:3000/checkout/" + @order.id.to_s + "/success",
       cancel_url: root_url,
     )
 
